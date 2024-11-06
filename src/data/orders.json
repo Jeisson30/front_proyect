@@ -1,0 +1,24 @@
+[
+    {
+      "id": 1,
+      "catalogId": 1,
+      "productId": 1,
+      "quantity": 2,
+      "date": "2024-11-01"
+    },
+    {
+      "id": 2,
+      "catalogId": 1,
+      "productId": 2,
+      "quantity": 1,
+      "date": "2024-11-02"
+    },
+    {
+      "id": 3,
+      "catalogId": 2,
+      "productId": 4,
+      "quantity": 5,
+      "date": "2024-11-03"
+    }
+  ]
+  
