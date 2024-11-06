@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "name": "Tecnología",
+    "description": "Productos electrónicos como computadoras, teléfonos y accesorios.",
+    "products": [
+      {
+        "id": 1,
+        "name": "Laptop",
+        "description": "Laptop de 15 pulgadas con procesador i7.",
+        "price": 1200.00,
+        "stock": 50
+      },
+      {
+        "id": 2,
+        "name": "Smartphone",
+        "description": "Smartphone de última generación con cámara 48MP.",
+        "price": 800.00,
+        "stock": 100
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Accesorios",
+    "description": "Accesorios para computadoras y dispositivos móviles.",
+    "products": [
+      {
+        "id": 3,
+        "name": "Teclado mecánico",
+        "description": "Teclado mecánico RGB, perfecto para gaming.",
+        "price": 150.00,
+        "stock": 200
+      },
+      {
+        "id": 4,
+        "name": "Mouse inalámbrico",
+        "description": "Mouse ergonómico inalámbrico con conexión Bluetooth.",
+        "price": 50.00,
+        "stock": 300
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Musica",
+    "description": "Accesorios para computadoras y dispositivos móviles.",
+    "products": [
+      {
+        "id": 5,
+        "name": "Guitarra Jackson Kelly",
+        "description": "Original importada",
+        "price": 4500000.00,
+        "stock": 3
+      },
+      {
+        "id": 6,
+        "name": "Pedalera Zoom G3x",
+        "description": "Multiples efectos",
+        "price": 650000.00,
+        "stock": 20
+      }
+    ]
+  }
+]
