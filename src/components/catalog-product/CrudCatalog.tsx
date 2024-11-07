@@ -6,9 +6,10 @@ import { Catalog } from './interfaces';
 interface CrudCatalogProps {
   initialCatalogs: Catalog[];
   onSave: (catalogs: Catalog[]) => void;
+  onDelete: (catalogId: number) => void;
 }
 
-const CrudCatalog: React.FC<CrudCatalogProps> = ({ initialCatalogs, onSave }) => {
+const CrudCatalog: React.FC<CrudCatalogProps> = ({ initialCatalogs, onSave, onDelete }) => {
   const [catalogs, setCatalogs] = useState<Catalog[]>(initialCatalogs);
   const [editingCatalog, setEditingCatalog] = useState<Catalog | null>(null);
 
@@ -32,10 +33,17 @@ const CrudCatalog: React.FC<CrudCatalogProps> = ({ initialCatalogs, onSave }) =>
     setEditingCatalog(null);
   };
 
+  const handleDelete = (catalogId: number) => {
+    const updatedCatalogs = catalogs.filter((catalog) => catalog.id !== catalogId);
+    setCatalogs(updatedCatalogs);
+    onSave(updatedCatalogs);
+    onDelete(catalogId);
+  };
+
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Gestión de Catálogos</h2>
-      <CatalogList catalogs={catalogs} onEdit={handleEdit} />
+    <div className="text-black max-w-4xl mx-auto">
+      <h2 className="text-2xl font-bold mb-4 text-black">Gestión de Catálogos</h2>
+      <CatalogList catalogs={catalogs} onEdit={handleEdit} onDelete={handleDelete} />
       <button
         onClick={() =>
           setEditingCatalog({ id: 0, name: '', description: '', products: [] })

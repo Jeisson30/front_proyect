@@ -1,61 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-interface Field {
-    name: string;
-    label: string;
-    type: string;
-  }
-  
-  interface FormProps<T> {
-    initialValues: T;
-    fields: Field[];
-    onSubmit: (values: T) => void;
-    onCancel: () => void;
-  }
-  
-  const Form = <T extends {}>({
-    initialValues,
-    fields,
-    onSubmit,
-    onCancel,
-  }: FormProps<T>) => {
-    const [values, setValues] = useState<T>(initialValues);
-  
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setValues((prev) => ({ ...prev, [name]: value }));
-    };
-  
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      onSubmit(values);
-    };
-  
-    return (
-      <form onSubmit={handleSubmit} className="bg-gray-100 p-4 rounded shadow-md">
-        {fields.map((field) => (
-          <div key={field.name} className="mb-4"> 
-            <label className="block font-semibold mb-2 text-black">{field.label}</label>
-            <input
-              name={field.name}
-              type={field.type}
-              value={(values as any)[field.name]}
-              onChange={handleChange}
-              className="border p-2 rounded w-full"
-            />
-          </div>
-        ))}
-        <div className="flex justify-end space-x-2">
-          <button type="button" onClick={onCancel} className="bg-gray-500 text-white p-2 rounded">
-            Cancelar
-          </button>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-            Guardar
-          </button>
-        </div>
-      </form>
-    );
+interface FormProps {
+  initialValues: any;
+  fields: { name: string; label: string; type: string }[];
+  onSubmit: (values: any) => void;
+  onCancel: () => void;
+}
+
+const Form: React.FC<FormProps> = ({ initialValues, fields, onSubmit, onCancel }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    initialValues[name] = value;
   };
-  
-  export default Form;
-  
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(initialValues);
+      }}
+      className="bg-gray-800 p-6 rounded-lg text-white"
+    >
+      {fields.map((field) => (
+        <div key={field.name} className="mb-4">
+          <label htmlFor={field.name} className="block text-sm font-medium text-white">
+            {field.label}
+          </label>
+          <input
+            type={field.type}
+            name={field.name}
+            defaultValue={initialValues[field.name]}
+            onChange={handleChange}
+            className="w-full p-2 mt-1 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:border-blue-500"
+          />
+        </div>
+      ))}
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="bg-gray-500 text-white p-2 rounded hover:bg-gray-400"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-400"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default Form;
