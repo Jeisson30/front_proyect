@@ -4,7 +4,7 @@ import { Product } from './interfaces';
 
 interface ProductListProps {
   products: Product[];
-  onEdit: (product: Product) => void; // Función para manejar la edición
+  onEdit: (product: Product) => void;
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products, onEdit }) => {
