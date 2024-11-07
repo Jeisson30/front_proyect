@@ -5,9 +5,10 @@ interface CatalogListProps {
   catalogs: Catalog[];
   onEdit: (catalog: Catalog) => void;
   onDelete: (catalogId: number) => void;
+  onAddToOrder: (catalog: Catalog) => void;
 }
 
-const CatalogList: React.FC<CatalogListProps> = ({ catalogs, onEdit, onDelete }) => {
+const CatalogList: React.FC<CatalogListProps> = ({ catalogs, onEdit, onDelete, onAddToOrder }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {catalogs.map((catalog) => (
@@ -25,9 +26,15 @@ const CatalogList: React.FC<CatalogListProps> = ({ catalogs, onEdit, onDelete })
           </button>
           <button
             onClick={() => onDelete(catalog.id)}
-            className="bg-red-500 text-white px-4 py-2 rounded"
+            className="bg-red-500 text-white px-4 py-2 rounded mr-2"
           >
             Eliminar
+          </button>
+          <button
+            onClick={() => onAddToOrder(catalog)}
+            className="bg-green-500 text-white px-4 py-2 rounded"
+          >
+            Agregar al Pedido
           </button>
         </div>
       ))}
