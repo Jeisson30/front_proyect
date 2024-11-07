@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import CatalogList from './CatalogList';
 import Form from '../common/Form';
-import { Catalog } from './interfaces';
+import { Catalog, Product } from './interfaces';
+import OrderManager from './OrderManager';
 
 interface CrudCatalogProps {
   initialCatalogs: Catalog[];
@@ -12,6 +14,7 @@ interface CrudCatalogProps {
 const CrudCatalog: React.FC<CrudCatalogProps> = ({ initialCatalogs, onSave, onDelete }) => {
   const [catalogs, setCatalogs] = useState<Catalog[]>(initialCatalogs);
   const [editingCatalog, setEditingCatalog] = useState<Catalog | null>(null);
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
 
   const handleEdit = (catalog: Catalog) => {
     setEditingCatalog(catalog);
@@ -40,10 +43,31 @@ const CrudCatalog: React.FC<CrudCatalogProps> = ({ initialCatalogs, onSave, onDe
     onDelete(catalogId);
   };
 
+  const handleAddToOrder = (catalog: Catalog) => {
+    setSelectedProducts((prevProducts) => [
+      ...prevProducts,
+      ...catalog.products,
+    ]);
+  };
+
+  const handleRemoveProductFromOrder = (productId: number) => {
+    const updatedProducts = selectedProducts.filter((product) => product.id !== productId);
+    setSelectedProducts(updatedProducts);
+  };
+
+  useEffect(() => {
+    console.log('Productos en el pedido:', selectedProducts);
+  }, [selectedProducts]);
+
   return (
     <div className="text-black max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-black">Gestión de Catálogos</h2>
-      <CatalogList catalogs={catalogs} onEdit={handleEdit} onDelete={handleDelete} />
+      <CatalogList 
+        catalogs={catalogs} 
+        onEdit={handleEdit} 
+        onDelete={handleDelete} 
+        onAddToOrder={handleAddToOrder} 
+      />
       <button
         onClick={() =>
           setEditingCatalog({ id: 0, name: '', description: '', products: [] })
@@ -67,6 +91,12 @@ const CrudCatalog: React.FC<CrudCatalogProps> = ({ initialCatalogs, onSave, onDe
           onCancel={() => setEditingCatalog(null)}
         />
       )}
+ 
+      <OrderManager 
+        selectedProducts={selectedProducts} 
+        onAddProduct={(product) => setSelectedProducts([...selectedProducts, product])}
+        onRemoveProduct={handleRemoveProductFromOrder}
+      />
     </div>
   );
 };
